@@ -9,7 +9,8 @@ Este único documento define **formato de commit**, **tipos/escopos**, **breakin
 
 **Estrutura exata:**
 
-```<tipo>(<escopo opcional>): <descrição curta no imperativo>
+```
+<tipo>(<escopo opcional>): <descrição curta no imperativo>
 
 [corpo opcional — o que mudou e por quê]
 
@@ -46,24 +47,29 @@ Escolha **um** escopo curto e consistente por commit (crie novos só quando nece
 
 Ex.:  
 
+```
 feat(service): cálculo de métricas de ritmo
-
+```
 
 ---
 
 ## 4) Breaking changes
 
+```
 Mudanças que quebram compatibilidade (API/contrato/ambiente) **devem** ser explícitas.
+```
 
 **Opção A — Exclamação no tipo:**
 
+```
 feat!: altera contrato do endpoint /insights
-
+```
 
 **Opção B — Rodapé obrigatório:**
 
+```
 BREAKING CHANGE: /insights agora exige header X-Session-ID
-
+```
 
 > Pode usar **ambos** para máxima visibilidade. Descreva impacto e migração.
 
@@ -82,38 +88,45 @@ BREAKING CHANGE: /insights agora exige header X-Session-ID
 
 **feature (curto)**
 
+```
 feat(api): adiciona endpoint GET /corrida/health
-
+```
 
 **fix (com corpo)**
 
+```
 fix(service): corrige normalização do rpm máximo
 
 A função calcular_metricas falhava com CSVs sem coluna "rpm".
 Agora usamos fallback seguro para rpm_max.
+```
 
 
 **refactor**
 
+```
 refactor(models): simplifica Telemetria removendo campo setor_opcional
-
+```
 
 **docs**
 
+```
 docs(readme): instruções de execução com Docker
-
+```
 
 **build**
 
+```
 build(docker): ajusta base python:3.11-slim e cache do pip
-
+```
 
 **breaking change**
 
+```
 feat!: renomeia rota /insights para /v1/insights
 
 BREAKING CHANGE: clientes devem atualizar a URL da API
-
+```
 
 ---
 
@@ -128,38 +141,46 @@ BREAKING CHANGE: clientes devem atualizar a URL da API
 
 **Exemplos:**
 
+```
 feature/ingestao-csv
+```
+```
 fix/ws-timeout
+```
+```
 chore/atualiza-deps
+```
 
 
 ### 7.2 Fluxo básico (local)
 
-atualizar a main
+```
+# atualizar a main
 
 git fetch origin
 git switch main
 git pull
-criar e trabalhar em uma feature
+# criar e trabalhar em uma feature
 
 git switch -c feature/<topico>
-... edições ...
+# ... edições ...
 
 git add -A
 git commit -m "feat(service): leitura CSV inicial"
 git push -u origin feature/<topico>
-
+```
 
 ### 7.3 Manter a branch atualizada (rebase)
 Antes do PR, rebaseie sua branch sobre a `main` para reduzir conflitos:
 
+```
 git fetch origin
 git switch feature/<topico>
 git rebase origin/main
-resolva conflitos se houver -> git add <arquivos> && git rebase --continue
+# resolva conflitos se houver -> git add <arquivos> && git rebase --continue
 
 git push -f # após rebase, normalmente precisa --force-with-lease
-
+```
 
 > Preferimos **rebase** (histórico linear). Se optar por merge local, mantenha mensagens claras.
 

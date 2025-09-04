@@ -33,3 +33,7 @@ O MVP foca em **simular “tempo real”** lendo CSV/JSON, processar métricas c
 - **SQLAlchemy** + **aiosqlite** (persistência local — opcional)
 - **HTTPX** (integrações externas, ex. LLM)
 - **pytest** (testes)
+
+## Convenção de Commits
+
+Consulte a [Convenção de Commits](docs/CONVENCAO-DE-COMMITS.md).
