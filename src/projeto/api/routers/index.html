@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Motorsport</title>
+<!-- Adicione dentro do .logo-container ou onde quiser mostrar a imagem -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --primary: #ff0a01;
+      --dark-bg: #1a1a1a;
+      --card-bg: #2a2a2a;
+      --text-light: #ffffff;
+      --text-gray: #cccccc;
+      --border-color: #444444;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--dark-bg) 0%, #2d2d2d 100%);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .header {
+      background: #000;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(225, 6, 0, 0.3);
+      position: relative;
+    }
+
+    .menu-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .title {
+      color: var(--primary);
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .subtitle {
+      color: var(--text-gray);
+      font-size: 16px;
+      margin-top: 5px;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-title {
+      color: var(--primary);
+      font-size: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .button:hover {
+      background: #ff3b30;
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      background: #4285F4;
+    }
+
+    .button-secondary:hover {
+      background: #5a95f5;
+    }
+
+    .footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .footer a {
+      color: var(--text-gray);
+      text-decoration: none;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .footer a:hover {
+      color: var(--primary);
+    }
+
+    .logo-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(45deg, var(--primary), #990600);
+      border-radius: 50%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      color: white;
+      box-shadow: 0 0 20px rgba(225, 6, 0, 0.5);
+    }
+
+    .settings-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .settings-item:last-child {
+      border-bottom: none;
+    }
+
+    .settings-text {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    .settings-value {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--primary);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back-button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .back-button:hover {
+      background: #444;
+    }
+
+    .value-badge {
+      background: #333;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .menu-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu-item {
+      padding: 15px;
+      background: #333;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .menu-item:hover {
+      background: #444;
+    }
+
+    .menu-item i {
+      font-size: 20px;
+      color: var(--primary);
+      width: 24px;
+    }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .telemetry-card {
+      background: #333;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .telemetry-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .telemetry-label {
+      font-size: 14px;
+      color: var(--text-gray);
+    }
+
+    .data-export-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .export-option {
+      padding: 15px;
+      background: #333;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .export-option:hover {
+      background: #444;
+    }
+
+    @media (min-width: 768px) {
+      .app-container {
+        max-width: 500px;
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Cabeçalho com menu -->
+    <div class="header">
+      <div class="menu-icon" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </div>
+      <h1 class="title" id="header-title">Elite Motorsport</h1>
+      <p class="subtitle" id="header-subtitle">Desempenho de alto nível</p>
+    </div>
+
+    <div class="content">
+      <!-- Tela de Login -->
+      <div id="login-screen">
+        <div class="logo-container">
+          <div class="logo">
+    <img src="EF.jpg" alt="Logo da Empresa" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+</div>
+          <h2 class="title" style="margin-top: 15px;">Elite Motorsport</h2>
+        </div>
+
+        <div class="card">
+          <button class="button button-secondary">
+            <i class="fab fa-google"></i> Entrar com Google
+          </button>
+
+          <button class="button" onclick="showScreen('main-menu-screen')">
+            Ir para a corrida
+          </button>
+        </div>
+      </div>
+
+      <!-- Menu Principal -->
+      <div id="main-menu-screen" class="hidden">
+        <button class="back-button" onclick="showScreen('login-screen')">
+          <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-home"></i> Menu Principal</h2>
+
+          <div class="menu-items">
+            <div class="menu-item" onclick="showScreen('telemetry-screen')">
+              <i class="fas fa-sliders-h"></i>
+              <span>Telemetria</span>
+            </div>
+
+            <div class="menu-item" onclick="showScreen('data-export-screen')">
+              <i class="fas fa-download"></i>
+              <span>Exportação de Dados</span>
+            </div>
+
+            <div class="menu-item" onclick="showScreen('account-screen')">
+              <i class="fas fa-user"></i>
+              <span>Minha Conta</span>
+            </div>
+
+            <div class="menu-item" onclick="showScreen('settings-screen')">
+              <i class="fas fa-cog"></i>
+              <span>Configurações</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tela de Configurações -->
+      <div id="settings-screen" class="hidden">
+        <button class="back-button" onclick="showScreen('main-menu-screen')">
+          <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-cog"></i> Configurações</h2>
+
+          <div class="settings-item" onclick="showScreen('telemetry-config-screen')">
+            <span class="settings-text">Configurações de Telemetria</span>
+            <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Exportação de Dados</span>
+            <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Idioma</span>
+            <span class="settings-value">Português</span>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Tema</span>
+            <span class="settings-value">Escuro</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tela de Telemetria em Tempo Real -->
+      <div id="telemetry-screen" class="hidden">
+        <button class="back-button" onclick="showScreen('main-menu-screen')">
+          <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-tachometer-alt"></i> Telemetria em Tempo Real</h2>
+          <p class="subtitle">Monitoramento de desempenho</p>
+
+          <div class="telemetry-grid">
+            <div class="telemetry-card">
+              <i class="fas fa-tachometer-alt"></i>
+              <div class="telemetry-value" id="rpm-value">4,800</div>
+              <div class="telemetry-label">RPM</div>
+            </div>
+
+            <div class="telemetry-card">
+              <i class="fas fa-temperature-high"></i>
+              <div class="telemetry-value" id="temp-value">87°C</div>
+              <div class="telemetry-label">Temperatura</div>
+            </div>
+
+            <div class="telemetry-card">
+              <i class="fas fa-bolt"></i>
+              <div class="telemetry-value" id="voltage-value">13.8V</div>
+              <div class="telemetry-label">Voltagem</div>
+            </div>
+
+            <div class="telemetry-card">
+              <i class="fas fa-gas-pump"></i>
+              <div class="telemetry-value" id="fuel-value">78%</div>
+              <div class="telemetry-label">Combustível</div>
+            </div>
+          </div>
+
+          <button class="button" style="margin-top: 20px;" onclick="showScreen('telemetry-config-screen')">
+            <i class="fas fa-sliders-h"></i> Configurações de Telemetria
+          </button>
+        </div>
+      </div>
+
+      <!-- Tela de Configurações de Telemetria -->
+      <div id="telemetry-config-screen" class="hidden">
+        <button class="back-button" onclick="goBackToTelemetry()">
+          <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-sliders-h"></i> Configurações de Telemetria</h2>
+          <p class="subtitle">Ajuste os parâmetros de telemetria para otimizar seu desempenho</p>
+
+          <h3 class="card-title" style="font-size: 18px; margin-top: 20px;"><i class="fas fa-sensor"></i> Sensor</h3>
+
+          <div class="settings-item">
+            <span class="settings-text">Sensor de RPM</span>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Frequência de Amostragem</span>
+            <span class="value-badge">10 Hz</span>
+          </div>
+
+          <h3 class="card-title" style="font-size: 18px; margin-top: 20px;"><i class="fas fa-wifi"></i> Integração</h3>
+
+          <div class="settings-item">
+            <span class="settings-text">Bluetooth</span>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Wi-Fi</span>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <h3 class="card-title" style="font-size: 18px; margin-top: 20px;"><i class="fas fa-database"></i>
+            Armazenamento de Dados</h3>
+
+          <div class="settings-item">
+            <span class="settings-text">Armazenamento Local</span>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Backup na Nuvem</span>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <button class="button" style="margin-top: 20px;">
+            Salvar Configurações
+          </button>
+        </div>
+      </div>
+
+      <!-- Tela de Exportação de Dados -->
+      <div id="data-export-screen" class="hidden">
+        <button class="back-button" onclick="showScreen('main-menu-screen')">
+          <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-download"></i> Exportação de Dados</h2>
+          <p class="subtitle">Exporte dados de telemetria para análise</p>
+
+          <div class="data-export-options">
+            <div class="export-option">
+              <div>
+                <i class="fas fa-file-csv" style="color: #28a745;"></i>
+                <span>Exportar como CSV</span>
+              </div>
+              <i class="fas fa-download"></i>
+            </div>
+
+            <div class="export-option">
+              <div>
+                <i class="fas fa-file-excel" style="color: #217346;"></i>
+                <span>Exportar como Excel</span>
+              </div>
+              <i class="fas fa-download"></i>
+            </div>
+
+            <div class="export-option">
+              <div>
+                <i class="fas fa-file-pdf" style="color: #e10600;"></i>
+                <span>Exportar como PDF</span>
+              </div>
+              <i class="fas fa-download"></i>
+            </div>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Intervalo de Dados</span>
+            <span class="value-badge">Últimas 24h</span>
+          </div>
+
+          <button class="button" style="margin-top: 20px;">
+            <i class="fas fa-cloud-download-alt"></i> Iniciar Exportação
+          </button>
+        </div>
+      </div>
+
+      <!-- Tela de Conta do Usuário -->
+      <div id="account-screen" class="hidden">
+        <button class="back-button" onclick="showScreen('main-menu-screen')">
+          <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-user"></i> Minha Conta</h2>
+
+          <div class="logo-container">
+            <div class="logo" style="width: 100px; height: 100px;">
+              <i class="fas fa-user"></i>
+            </div>
+            <h2 class="title" style="margin-top: 15px; font-size: 22px;">João Silva</h2>
+            <p class="subtitle">joao.silva@email.com</p>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Plano</span>
+            <span class="value-badge" style="background: var(--primary);">Premium</span>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Veículo</span>
+            <span class="settings-value">Porsche 911 GT3</span>
+          </div>
+
+          <div class="settings-item">
+            <span class="settings-text">Membro desde</span>
+            <span class="settings-value">12/03/2022</span>
+          </div>
+
+          <button class="button" style="margin-top: 20px;">
+            <i class="fas fa-sign-out-alt"></i> Sair da Conta
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a onclick="changeLanguage('pt')">Português</a>
+      <span>|</span>
+      <a onclick="changeLanguage('en')">English</a>
+    </div>
+  </div>
+
+  <script>
+    // Função para alternar entre telas
+    function showScreen(screenId) {
+      // Oculta todas as telas
+      document.querySelectorAll('.content > div').forEach(screen => {
+        screen.classList.add('hidden');
+      });
+
+      // Mostra a tela solicitada
+      document.getElementById(screenId).classList.remove('hidden');
+
+      // Atualiza o cabeçalho conforme a tela
+      updateHeader(screenId);
+    }
+
+    // Função para voltar para a tela de telemetria
+    function goBackToTelemetry() {
+      if (document.getElementById('telemetry-screen').classList.contains('hidden')) {
+        showScreen('telemetry-screen');
+      } else {
+        showScreen('main-menu-screen');
+      }
+    }
+
+    // Função para atualizar o cabeçalho conforme a tela
+    function updateHeader(screenId) {
+      const headerTitle = document.getElementById('header-title');
+      const headerSubtitle = document.getElementById('header-subtitle');
+
+      switch (screenId) {
+        case 'login-screen':
+          headerTitle.textContent = 'Elite Motorsport';
+          headerSubtitle.textContent = 'Desempenho de alto nível';
+          break;
+        case 'main-menu-screen':
+          headerTitle.textContent = 'Menu Principal';
+          headerSubtitle.textContent = 'Selecione uma opção';
+          break;
+        case 'settings-screen':
+          headerTitle.textContent = 'Configurações';
+          headerSubtitle.textContent = 'Ajustes do sistema';
+          break;
+        case 'telemetry-screen':
+          headerTitle.textContent = 'Telemetria';
+          headerSubtitle.textContent = 'Monitoramento em tempo real';
+          break;
+        case 'telemetry-config-screen':
+          headerTitle.textContent = 'Config. Telemetria';
+          headerSubtitle.textContent = 'Ajuste os parâmetros';
+          break;
+        case 'data-export-screen':
+          headerTitle.textContent = 'Exportar Dados';
+          headerSubtitle.textContent = 'Exporte dados de telemetria';
+          break;
+        case 'account-screen':
+          headerTitle.textContent = 'Minha Conta';
+          headerSubtitle.textContent = 'Perfil do usuário';
+          break;
+      }
+    }
+
+    // Função para alternar idioma
+    function changeLanguage(lang) {
+      alert(`Idioma alterado para ${lang === 'pt' ? 'Português' : 'English'}`);
+      // Aqui viria a lógica real de internacionalização
+    }
+
+    // Função para simular dados de telemetria em tempo real
+    function simulateTelemetry() {
+      if (!document.getElementById('telemetry-screen').classList.contains('hidden')) {
+        // Gera valores aleatórios para os medidores
+        document.getElementById('rpm-value').textContent =
+          Math.floor(Math.random() * 3000 + 3000).toLocaleString();
+
+        document.getElementById('temp-value').textContent =
+          Math.floor(Math.random() * 20 + 80) + '°C';
+
+        document.getElementById('voltage-value').textContent =
+          (Math.random() * 1.5 + 12.5).toFixed(1) + 'V';
+
+        document.getElementById('fuel-value').textContent =
+          Math.floor(Math.random() * 10 + 70) + '%';
+      }
+    }
+
+    // Inicializa com a tela de login visível
+    document.addEventListener('DOMContentLoaded', function () {
+      showScreen('login-screen');
+
+      // Simula dados de telemetria a cada 2 segundos
+      setInterval(simulateTelemetry, 2000);
+    });
+  </script>
+</body>
+
+</html>
