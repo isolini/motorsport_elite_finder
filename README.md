@@ -57,7 +57,6 @@ source .venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
-Configure as variáveis de ambiente:
 ```
 
 4. Crie um arquivo .env (copie de .env.example):
@@ -72,6 +71,38 @@ ENV=dev
 5. Rode o servidor:
 
 ```bash
-Copy code
 uvicorn src.projeto.api.main:app --reload
+```
+---
+
+## Testando a aplicação
+
+### Front-end
+Acesse no navegador:  
+[http://127.0.0.1:8000/](http://127.0.0.1:8000/)  
+
+Isso abre o `index.html` (SPA com CSS/JS).
+
+### API básica
+Você pode testar usando **Postman** ou **curl**.
+
+#### 1. Ping do DB
+```bash
+curl http://127.0.0.1:8000/api/db/ping
+```
+#### 2. Criar sessão
+```bash
+curl -X POST http://127.0.0.1:8000/api/sessoes \
+  -H "Content-Type: application/json" \
+  -d '{"driver_name":"Piloto Teste","track_name":"Interlagos","vehicle":"GT3"}'
+```
+#### 3. Inserir telemetria (lote)
+```bash
+curl -X POST http://127.0.0.1:8000/api/telemetria/batch \
+  -H "Content-Type: application/json" \
+  -d '[{"sessao_id":1,"rpm":6800,"coolant_temp":92.5},{"sessao_id":1,"rpm":7100,"coolant_temp":93.0}]'
+```
+#### 4. Listar últimas amostras
+```bash
+curl "http://127.0.0.1:8000/api/telemetria/ultimas?sessao_id=1&limit=5"
 ```
