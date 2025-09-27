@@ -37,3 +37,41 @@ O MVP foca em **simular “tempo real”** lendo CSV/JSON, processar métricas c
 ## Convenção de Commits
 
 Consulte a [Convenção de Commits](docs/CONVENCAO-DE-COMMITS.md).
+
+
+## Como rodar
+
+1. Clone o repositório e entre na pasta:
+```
+git clone git@github.com:SEU_USUARIO/motorsport_elite_finder.git
+cd motorsport_elite_finder
+```
+2. Crie e ative o ambiente virtual (opcional, mas recomendado):
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+```
+3. Instale as dependências:
+
+
+```bash
+pip install -r requirements.txt
+Configure as variáveis de ambiente:
+```
+
+4. Crie um arquivo .env (copie de .env.example):
+
+```bash
+DATABASE_URL=sqlite:///./app.db
+API_PREFIX=/api
+ENV=dev
+
+```
+
+5. Rode o servidor:
+
+```bash
+Copy code
+uvicorn src.projeto.api.main:app --reload
+```
